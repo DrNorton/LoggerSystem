@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Filters;
+using System.Web.Mvc;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
@@ -14,6 +15,11 @@ namespace LoggerProxyWebService.DependencyInjection.Installers
             container.Register(Classes.FromAssemblyContaining<ApiResult>()
                     .BasedOn<ApiController>()
                     .LifestyleTransient());
+
+            container.Register(Classes.FromAssemblyContaining<ApiResult>()
+                .BasedOn<Controller>()
+                .LifestyleTransient());
+
             container.Register(Component.For<IFilter, ExceptionHandler>().LifestyleTransient());
 
         }

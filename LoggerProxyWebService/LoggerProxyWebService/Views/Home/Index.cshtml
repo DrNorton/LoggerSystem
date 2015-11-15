@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "MainView";
+}
+
+<h2>MainView</h2>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Мобильный тестер</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/mobiletestercss.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Мобильный тестер</a>
+                <ul class="navbar-list">
+                    <li class="connect"><button type="button" id="connectButton" class="btn btn-success" data-loading-text="Подключение...">Подключиться</button></li>
+                    <li class="disconnect hidden"><button type="button" class="btn btn-warning " id="disconnectButton">Отключиться</button></li>
+                    <li class="clear hidden"><button type="button" class="btn" id="clearButton">Очистить</button></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        <div class="starter-template">
+            <div id="log" class="log"></div>
+            <div class="phone_container">
+                <div class="phone-name"></div>
+                <div class="phone-image"></div>
+                <div class="phone-guid"></div>
+                <div class="phone-time"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="popup1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Выберите устройство</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="phoneTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Модель телефона</th>
+                                <th>Время регистрации</th>
+                                <th>Идентификатор</th>
+                                <th>Изображение</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+    <div class="modal fade" id="popup2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Какая операционка?</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="platformsTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Операционка</th>
+                                <th>Изображение</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+<script src="/Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/main.js"></script>
+</body>
+</html>
+

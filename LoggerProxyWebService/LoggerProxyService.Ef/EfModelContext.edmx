@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EfContext.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Devices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Guid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PlatformId" Type="int" Nullable="false" />
+          <Property Name="OsVersion" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Platforms">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlatformName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Registrations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="DeviceId" Type="int" />
+          <Property Name="RegistrationTime" Type="datetime" />
+          <Property Name="AssemblyVersion" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_Devices_Platform">
+          <End Role="Platforms" Type="Self.Platforms" Multiplicity="1" />
+          <End Role="Devices" Type="Self.Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Platforms">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="PlatformId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registrations_ToDevices">
+          <End Role="Devices" Type="Self.Devices" Multiplicity="0..1" />
+          <End Role="Registrations" Type="Self.Registrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Devices">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registrations">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registrations_ToPrjects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="Registrations" Type="Self.Registrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registrations">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EfContextStoreContainer">
+          <EntitySet Name="Devices" EntityType="Self.Devices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Platforms" EntityType="Self.Platforms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Registrations" EntityType="Self.Registrations" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Devices_Platform" Association="Self.FK_Devices_Platform">
+            <End Role="Platforms" EntitySet="Platforms" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registrations_ToDevices" Association="Self.FK_Registrations_ToDevices">
+            <End Role="Devices" EntitySet="Devices" />
+            <End Role="Registrations" EntitySet="Registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registrations_ToPrjects" Association="Self.FK_Registrations_ToPrjects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Registrations" EntitySet="Registrations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EfContext" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LoggerEfContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Devices" EntityType="EfContext.Device" />
+          <EntitySet Name="Platforms" EntityType="EfContext.Platform" />
+          <EntitySet Name="Projects" EntityType="EfContext.Project" />
+          <EntitySet Name="Registrations" EntityType="EfContext.Registration" />
+          <AssociationSet Name="FK_Devices_Platform" Association="EfContext.FK_Devices_Platform">
+            <End Role="Platform" EntitySet="Platforms" />
+            <End Role="Device" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registrations_ToDevices" Association="EfContext.FK_Registrations_ToDevices">
+            <End Role="Device" EntitySet="Devices" />
+            <End Role="Registration" EntitySet="Registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registrations_ToPrjects" Association="EfContext.FK_Registrations_ToPrjects">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Registration" EntitySet="Registrations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Guid" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PlatformId" Type="Int32" Nullable="false" />
+          <Property Name="OsVersion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Platform" Relationship="EfContext.FK_Devices_Platform" FromRole="Device" ToRole="Platform" />
+          <NavigationProperty Name="Registrations" Relationship="EfContext.FK_Registrations_ToDevices" FromRole="Device" ToRole="Registration" />
+        </EntityType>
+        <EntityType Name="Platform">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlatformName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Devices" Relationship="EfContext.FK_Devices_Platform" FromRole="Platform" ToRole="Device" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Registrations" Relationship="EfContext.FK_Registrations_ToPrjects" FromRole="Project" ToRole="Registration" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="DeviceId" Type="Int32" />
+          <Property Name="RegistrationTime" Type="DateTime" Precision="3" />
+          <Property Name="AssemblyVersion" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Device" Relationship="EfContext.FK_Registrations_ToDevices" FromRole="Registration" ToRole="Device" />
+          <NavigationProperty Name="Project" Relationship="EfContext.FK_Registrations_ToPrjects" FromRole="Registration" ToRole="Project" />
+        </EntityType>
+        <Association Name="FK_Devices_Platform">
+          <End Type="EfContext.Platform" Role="Platform" Multiplicity="1" />
+          <End Type="EfContext.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Platform">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="PlatformId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registrations_ToDevices">
+          <End Type="EfContext.Device" Role="Device" Multiplicity="0..1" />
+          <End Type="EfContext.Registration" Role="Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registrations_ToPrjects">
+          <End Type="EfContext.Project" Role="Project" Multiplicity="1" />
+          <End Type="EfContext.Registration" Role="Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EfContextStoreContainer" CdmEntityContainer="LoggerEfContext">
+          <EntitySetMapping Name="Devices">
+            <EntityTypeMapping TypeName="EfContext.Device">
+              <MappingFragment StoreEntitySet="Devices">
+                <ScalarProperty Name="OsVersion" ColumnName="OsVersion" />
+                <ScalarProperty Name="PlatformId" ColumnName="PlatformId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Platforms">
+            <EntityTypeMapping TypeName="EfContext.Platform">
+              <MappingFragment StoreEntitySet="Platforms">
+                <ScalarProperty Name="PlatformName" ColumnName="PlatformName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="EfContext.Project">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registrations">
+            <EntityTypeMapping TypeName="EfContext.Registration">
+              <MappingFragment StoreEntitySet="Registrations">
+                <ScalarProperty Name="AssemblyVersion" ColumnName="AssemblyVersion" />
+                <ScalarProperty Name="RegistrationTime" ColumnName="RegistrationTime" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

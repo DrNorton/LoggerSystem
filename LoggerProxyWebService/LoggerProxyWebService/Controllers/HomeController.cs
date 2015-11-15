@@ -1,30 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Mvc;
-using LoggerProxyWebService.ApiResults;
 
 namespace LoggerProxyWebService.Controllers
 {
-    [System.Web.Http.RoutePrefix("api/Account")]
-    [EnableCors(origins: "http://giftknackapi.azurewebsites.net", headers: "*", methods: "*")]
-    public class HomeController : CustomApiController
+    public class HomeController: Controller
     {
         public HomeController()
         {
-            
+            Debug.WriteLine("dad");
         }
-
-        [System.Web.Http.AllowAnonymous]
-        [System.Web.Http.Route("Register")]
-        [System.Web.Http.HttpGet]
-        public async Task<IHttpActionResult> Test()
+        public ActionResult Index()
         {
-            return SuccessApiResult("test");
+            ViewBag.Title = "Home Page";
+
+            return View();
         }
     }
 }
