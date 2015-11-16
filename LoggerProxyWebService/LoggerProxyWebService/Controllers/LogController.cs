@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using LoggerProxyService.Ef.Repositories.Base;
 using LoggerProxyWebService.ApiResults;
 using LoggerProxyWebService.Dtos.Models;
+using LoggerProxyWebService.Services;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 
@@ -20,10 +21,12 @@ namespace LoggerProxyWebService.Controllers
     public class LogController : CustomApiController
     {
         private readonly IDeviceRepository _deviceRepository;
+        private readonly IRabbitConnectionFactory _rabbitConnectionFactory;
 
-        public LogController(IDeviceRepository deviceRepository)
+        public LogController(IDeviceRepository deviceRepository,IRabbitConnectionFactory rabbitConnectionFactory)
         {
             _deviceRepository = deviceRepository;
+            _rabbitConnectionFactory = rabbitConnectionFactory;
         }
 
         [System.Web.Http.AllowAnonymous]
@@ -31,8 +34,7 @@ namespace LoggerProxyWebService.Controllers
         [System.Web.Http.HttpPost]
         public async Task<IHttpActionResult> AddToLog(LogModel log)
         {
-            var factory=new ConnectionFactory() {HostName = "localhost",UserName = "test", Password = "test"};
-            using (var connection = factory.CreateConnection())
+            using (var connection = _rabbitConnectionFactory.CreateConnection())
             {
                 using (var channel = connection.CreateModel())
                 {
@@ -47,6 +49,7 @@ namespace LoggerProxyWebService.Controllers
                                          basicProperties: null,
                                          body: body);
                     Console.WriteLine(" [x] Sent '{0}':'{1}'", routingKey, message);
+                    
 
                 }
             }

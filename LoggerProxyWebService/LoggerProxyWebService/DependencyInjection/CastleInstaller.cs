@@ -1,6 +1,7 @@
 ﻿using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
+using Microsoft.AspNet.SignalR;
 
 namespace LoggerProxyWebService.DependencyInjection
 {
@@ -10,7 +11,8 @@ namespace LoggerProxyWebService.DependencyInjection
         {
             var container = new WindsorContainer().Install(FromAssembly.This());
             container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel, true));
-     
+            var signalrDependency = new SignalrDependencyResolver(container.Kernel);
+            GlobalHost.DependencyResolver = signalrDependency;
             return container;
         }
     }

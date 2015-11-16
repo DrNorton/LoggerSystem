@@ -1,11 +1,14 @@
-﻿$( document ).ready( function () {
+﻿
+$(document).ready(function () {
+
 
 	var socket;
     var logEl = $("#log");
     var popup = $('#popup1');
     var popup2 = $('#popup2');
 	var connectBtn = $( '#connectButton' );
-	var disconnectBtn = $( '#disconnectButton' );
+	var disconnectBtn = $('#disconnectButton');
+
 
 	function connect() {
 	      $.ajax({
@@ -24,6 +27,32 @@
 	    });
 	}
 
+	function connectToGroup(groupname) {
+
+	    // Proxy created on the fly
+	    var chat = $.connection.chat;
+	    $.connection.hub.logging = true;
+
+	    // Declare a function on the chat hub so the server can invoke it
+	    chat.client.sendMessage = function (message) {
+	        data(message);
+	    };
+
+
+	    // Start the connection
+	    $.connection.hub.start(function () {
+	        chat.server.joinGroup(groupname)
+             .done(function () {
+                 popup.modal('hide');
+                 popup2.modal('hide');
+             })
+             .fail(function (e) {
+                 console.warn(e);
+             });
+	        console.log("Success");
+	    });
+	};
+
 	function disconnect() {
 	
 	}
@@ -31,10 +60,7 @@
 		$( '#log' ).html( '' );
 	}
 
-	function attach( guid ) {
-		socket.send( "attach:" + guid );
-
-	}
+	
 
     function createPlatformsTable(platforms) {
         var table = $("#platformsTable tr").remove();
@@ -71,9 +97,11 @@
 	$( '#phoneTable' ).on( 'click', 'tr', function () {
 		var cell = $( this );
 		var guid = cell.find( ".guid" ).html();
-	
+	    connectToGroup(guid);
 		popup2.modal('hide');
-	    popup.modal('show');
+		popup.modal('show');
+		var node = '<div class="item"><div class="alert alert-success" role="alert"><h4><span class="label label-danger ">' +"" + '</span>' + "Приконектились к очереди" + '</h4></div></div>';
+		logEl.append(node);
 	});
 
 	$('#platformsTable').on('click', 'tr', function () {
@@ -101,6 +129,13 @@
 	    popup2.modal('hide');
 	
 	});
+
+    function data(result) {
+        var json = JSON.parse(result);
+        var node = '<div class="item"><div class="alert alert-success" role="alert"><h4><span class="label label-danger ">' + json.Time + '</span>' + json.Text + '</h4></div></div>';
+        logEl.append(node);
+        scroll();
+    }
 
 	function scroll() {
 	    var scrollHeight = logEl[0].scrollHeight;
