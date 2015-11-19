@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace LoggerProxyWebService.Dtos.Models
 {
@@ -10,6 +11,7 @@ namespace LoggerProxyWebService.Dtos.Models
 
     public class LogMessage
     {
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         public DateTime Time { get; set; }
         public string Text { get; set; }
     }

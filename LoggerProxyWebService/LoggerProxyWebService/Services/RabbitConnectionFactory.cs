@@ -16,9 +16,9 @@ namespace LoggerProxyWebService.Services
     {
         private ConnectionFactory _factory;
 
-        public RabbitConnectionFactory()
+        public RabbitConnectionFactory(string hostName,string userName,string password)
         {
-            _factory = new ConnectionFactory() { HostName = "localhost", UserName = "test", Password = "test" };
+            _factory = new ConnectionFactory() { HostName = hostName, UserName = userName, Password = password };
         }
         public IConnection CreateConnection()
         {

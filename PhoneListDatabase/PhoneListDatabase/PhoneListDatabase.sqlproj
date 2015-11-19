@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{ac5658fc-93fb-47b4-99f0-33dd2aba485c}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -68,5 +68,8 @@
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="PhoneListDatabase.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PhoneListDatabaseLocal.publish.xml" />
   </ItemGroup>
 </Project>

@@ -1,25 +1,20 @@
-﻿@{
-    ViewBag.Title = "MainView";
-}
-
-<h2>MainView</h2>
-
-<html lang="en">
+﻿<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <title>Мобильный тестер</title>
     <!-- Bootstrap core CSS -->
     <link href="/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="/Content/mobiletestercss.css" rel="stylesheet" />
+    <link href="/Content/mobiletestercss.css" rel="stylesheet"/>
+
 </head>
 
 <body>
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -55,7 +50,7 @@
                     <h4 class="modal-title">Выберите устройство</h4>
                 </div>
                 <div class="modal-body">
-                    <table id="phoneTable" class="table">
+                    <table id="phoneTable" class="table" >
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -81,7 +76,7 @@
                     <h4 class="modal-title">Какая операционка?</h4>
                 </div>
                 <div class="modal-body">
-                    <table id="platformsTable" class="table">
+                    <table id="platformsTable" class="table" style="vertical-align: center;">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -95,9 +90,13 @@
 
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-
+</div><!-- /.modal -->
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/DateFormat.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js" type="text/javascript"></script>
+    <script src="/signalr/hubs" type="text/javascript"></script>
+    <script src="/Scripts/main.js"></script>
 </body>
 </html>
 

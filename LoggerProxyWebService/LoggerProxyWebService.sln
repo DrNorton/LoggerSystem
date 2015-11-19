@@ -5,13 +5,6 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerProxyWebService", "LoggerProxyWebService\LoggerProxyWebService.csproj", "{BE069E1D-0C29-4E34-94B5-51155746207B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{205E7BFC-9F38-4E10-894B-9B1A7D5107E0}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerProxyService.Ef", "LoggerProxyService.Ef\LoggerProxyService.Ef.csproj", "{9EC1D931-5877-4C39-A7AF-0838DFD8649E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerProxyWebService.Dtos", "LoggerProxyWebService.Dtos\LoggerProxyWebService.Dtos.csproj", "{D0C9D451-5E28-44BE-A43F-06FB4E3DA88F}"

@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Data.Entity.Validation;
+using System.Web.Http;
 using System.Web.Http.Filters;
 using System.Web.Mvc;
 using Castle.MicroKernel.Registration;
@@ -28,10 +30,24 @@ namespace LoggerProxyWebService.DependencyInjection.Installers
         {
             public override void OnException(HttpActionExecutedContext context)
             {
-                var result= new ApiResult(context.Request, 1000, context.Exception.Message.ToString(), null);
-                var ex=result.Execute();
-                context.Response = ex;
+                if (context.Exception is DbEntityValidationException)
+                {
+                    var ex2 = context.Exception as DbEntityValidationException;
+                    var result = new ApiResult(context.Request, 1000, ex2.DbEntityValidationExceptionToString(), null);
+                    var ex = result.Execute();
+                    context.Response = ex;
+                }
+                else
+                {
+                    var result = new ApiResult(context.Request, 1000, context.Exception.Message.ToString() + context.Exception.StackTrace, null);
+                    var ex = result.Execute();
+                    context.Response = ex;
+
+                }
+             
             }
         }
+
+
     }
 }

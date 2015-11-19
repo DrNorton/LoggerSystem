@@ -58,8 +58,8 @@ html,body{
 /****   log   ****/
 /*****************/
 .log {
-		height: 85%;
-		width: 70%;
+		height: 98%;
+		width: 80%;
 		overflow: auto;
 		background-color: #FFF;
 		border: solid 2px #e8e8e8;
@@ -100,7 +100,7 @@ html,body{
 /*****************/		
 .phone_container {
 		display: inline-block;
-		width: 25%;
+		width: 10%;
 		margin-left:2%;
 		margin-top: 30px;
 		text-align: center;

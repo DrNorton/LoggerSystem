@@ -25,7 +25,7 @@ namespace LoggerProxyWebService.Controllers
         [System.Web.Http.HttpPost]
         public async Task<IHttpActionResult> GetDevicesByPlatform(IdModel platformId)
         {
-            return SuccessApiResult(_deviceRepository.GetDevicesByPlatform(platformId.Id));
+            return SuccessApiResult(_deviceRepository.GetDevicesByPlatform(platformId.Id).OrderByDescending(x=>x.LastUpdatedTime));
         }
 
         [System.Web.Http.AllowAnonymous]

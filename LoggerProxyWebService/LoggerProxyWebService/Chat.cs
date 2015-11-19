@@ -30,7 +30,7 @@ namespace LoggerProxyWebService
         public Task JoinGroup(string groupName)
         {
             _rabbitLogBus.Subscribe(groupName, Context.ConnectionId);
-            return new Task(()=> {});
+            return Groups.Add(Context.ConnectionId, groupName);
         }
 
         

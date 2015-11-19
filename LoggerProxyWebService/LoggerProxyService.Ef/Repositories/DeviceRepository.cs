@@ -31,14 +31,16 @@ namespace LoggerProxyService.Ef.Repositories
                 //Устройство регистрируется впервые
                 var newDevice = new Device() {Guid = register.Guid, Name = register.DeviceName, Platform = platform};
                 _context.Devices.Add(newDevice);
-                _context.SaveChanges();
                 findedDevice = newDevice;
             }
-            var projects = _context.Projects.ToList();
+
                 var project = _context.Projects.FirstOrDefault(x => x.Name == register.ProjectName);
+          
                 if (project == null)
                 {
-                    throw new Exception("Имя проекта, которую ты передал, не существует в базе");
+                    var newProject=new Project() {Name = register.ProjectName};
+                    _context.Projects.Add(newProject);
+                    project = newProject;
                 }
                 //Устройство уже было зарегано когда то. Надо добавить новую регистрацию
             var newRegistration = new Registration()
@@ -56,7 +58,7 @@ namespace LoggerProxyService.Ef.Repositories
         public List<DeviceDto> GetDevicesByPlatform(int platformId)
         {
            var devices=_context.Devices.Where(x=>x.PlatformId== platformId).ToList();
-           return devices.Select(x => new DeviceDto() {Guid = x.Guid,Id = x.Id,Name = x.Name}).ToList();
+           return devices.Select(x => new DeviceDto() {Guid = x.Guid,Id = x.Id,Name = x.Name,LastUpdatedTime =x.Registrations.LastOrDefault().RegistrationTime}).ToList();
 
         }
 

@@ -37,7 +37,7 @@
           <Property Name="ProjectId" Type="int" Nullable="false" />
           <Property Name="DeviceId" Type="int" />
           <Property Name="RegistrationTime" Type="datetime" />
-          <Property Name="AssemblyVersion" Type="nvarchar" MaxLength="10" />
+          <Property Name="AssemblyVersion" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <Association Name="FK_Devices_Platform">
           <End Role="Platforms" Type="Self.Platforms" Multiplicity="1" />
@@ -151,7 +151,7 @@
           <Property Name="ProjectId" Type="Int32" Nullable="false" />
           <Property Name="DeviceId" Type="Int32" />
           <Property Name="RegistrationTime" Type="DateTime" Precision="3" />
-          <Property Name="AssemblyVersion" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="AssemblyVersion" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Device" Relationship="EfContext.FK_Registrations_ToDevices" FromRole="Registration" ToRole="Device" />
           <NavigationProperty Name="Project" Relationship="EfContext.FK_Registrations_ToPrjects" FromRole="Registration" ToRole="Project" />
         </EntityType>

@@ -1,8 +1,5 @@
 ﻿
 $(document).ready(function () {
-
-
-	var socket;
     var logEl = $("#log");
     var popup = $('#popup1');
     var popup2 = $('#popup2');
@@ -12,7 +9,7 @@ $(document).ready(function () {
 
 	function connect() {
 	      $.ajax({
-	        url: 'http://localhost:64711/api/Data/GetPlatforms',
+	        url: '/api/Data/GetPlatforms',
 	        type: 'POST',
 	        dataType: 'json',
 	        
@@ -45,7 +42,9 @@ $(document).ready(function () {
              .done(function () {
                  popup.modal('hide');
                  popup2.modal('hide');
-             })
+                 var node = '<div class="item"><div class="alert alert-success" role="alert"><h4><span class="label label-danger ">' + "" + '</span>' + "Приконектились к очереди" + '</h4></div></div>';
+                 logEl.append(node);
+             }) 
              .fail(function (e) {
                  console.warn(e);
              });
@@ -68,24 +67,23 @@ $(document).ready(function () {
         for (index = 0; index < platforms.length; ++index) {
             $("#platformsTable tbody").append(
 					"<tr>" +
-					"<td class='guid'>" + platforms[index].Id + "</td>" +
-					"<td class='model'>" + platforms[index].PlatformName + "</td>" +
-					
-					'<td class="image"><img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="'+platforms[index].Icon+ '"data-holder-rendered="true" style="width: 200px; height: 200px;"></td>'
-					+ "</tr>");
+					"<td style='display: none' class='guid'>" + platforms[index].Id + "</td>" +
+					'<td class="image"><img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="./Content/images/' + platforms[index].PlatformName + '.png "data-holder-rendered="true" style="width: 200px; height: 200px;"></td>'
+                    + "<td>" + platforms[index].PlatformName + "</td>" +
+                    + "</tr>");
         }
     }
 
 	function createPhoneTable( telephones ) {
-		var table = $( "#phoneTable" );
+	    var table = $("#phoneTable tr").remove();
 		for ( index = 0; index < telephones.length; ++index ) {
-			$( "#phoneTable tbody" ).html('').append(
+			$( "#phoneTable tbody" ).append(
 					"<tr>" +
 					"<td>" + telephones[index].Id + "</td>" +
-					"<td class='model'>" + telephones[index].Name + "</td>" +
-					"<td class='time'>" + telephones[index].Time + "</td>" +
+					"<td class='model'>" + telephones[index].Name + "</td>" + 
+					"<td class='time'>" + telephones[index].LastUpdatedTime + "</td>" +
 					"<td class='guid'>" + telephones[index].Guid + "</td>" +
-					'<td class="image"><img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="./Content/images/' + telephones[index].Name + '.png "data-holder-rendered="true" style="width: 200px; height: 200px;"></td>'
+					'<td class="image"><img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="./Content/images/' + telephones[index].Name + '.png" data-holder-rendered="true" style="width: 200px; height: 200px;"></td>'
 					+ "</tr>" );
 		}
 	}
@@ -95,24 +93,22 @@ $(document).ready(function () {
 	$('#clearButton').on( 'click', clear );
 
 	$( '#phoneTable' ).on( 'click', 'tr', function () {
-		var cell = $( this );
-		var guid = cell.find( ".guid" ).html();
+		var cell = $(this);
+		var guid = cell.find(".guid").html();
+		$('.phone-name').html(cell.find(".model").html());
+		$('.phone-time').html(cell.find(".time").html());
+		$('.phone-guid').html(guid);
+		$('.phone-image').html(cell.find(".image").html());
 	    connectToGroup(guid);
-		popup2.modal('hide');
-		popup.modal('show');
-		var node = '<div class="item"><div class="alert alert-success" role="alert"><h4><span class="label label-danger ">' +"" + '</span>' + "Приконектились к очереди" + '</h4></div></div>';
-		logEl.append(node);
+	 
+		
 	});
 
 	$('#platformsTable').on('click', 'tr', function () {
 	    var cell = $(this);
 	    var guid = cell.find(".guid").html();
-	    $('.phone-name').html(cell.find(".model").html());
-	    $('.phone-time').html(cell.find(".time").html());
-	    $('.phone-guid').html(guid);
-	    $('.phone-image').html(cell.find(".image").html());
 	    $.ajax({
-	        url: 'http://localhost:64711/api/Data/GetDevicesByPlatform',
+	        url: '/api/Data/GetDevicesByPlatform',
 	        type: 'POST',
 	        data: { "Id": guid },
 	        dataType: 'json',
@@ -136,6 +132,8 @@ $(document).ready(function () {
         logEl.append(node);
         scroll();
     }
+
+  
 
 	function scroll() {
 	    var scrollHeight = logEl[0].scrollHeight;

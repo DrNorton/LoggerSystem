@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Net.Http.Formatting;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using System.Web.Http.Filters;
@@ -39,6 +40,7 @@ namespace LoggerProxyWebService
             config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new IsoDateTimeConverter());
 
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.SupportedEncodings.Add(Encoding.GetEncoding(1252));
             json.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
             System.Web.Http.GlobalConfiguration.Configuration.Filters.Add(container.Resolve<IFilter>());
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace LoggerProxyWebService.Dtos.Models
 {
@@ -11,7 +12,8 @@ namespace LoggerProxyWebService.Dtos.Models
         public int Id { get; set; }
         public string Guid { get; set; }
         public string Name { get; set; }
-        public int PlatformId { get; set; }
+        [JsonConverter(typeof(CustomDateTimeConverter))]
+        public DateTime? LastUpdatedTime { get; set; }
         
     }
 

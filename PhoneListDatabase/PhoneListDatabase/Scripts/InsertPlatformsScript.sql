@@ -13,4 +13,3 @@ Post-Deployment Script Template
 INSERT INTO Platforms (PlatformName) VALUES('Android')
 INSERT INTO Platforms (PlatformName) VALUES('IOS')
 INSERT INTO Platforms (PlatformName) VALUES('Windows Phone')
-INSERT INTO Projects(Name) VALUES(N'Госуслуги Москвы')
